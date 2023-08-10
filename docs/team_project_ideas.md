@@ -13,6 +13,6 @@ you like the best.
 | Project Idea | Description | @timDehof | @Yi | teammate name | teammate name | teammate name | teammate name |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | Online Quiz platform | Create an online quiz platform where users can take quizzes, track their scores, and compete with others. | X |X | | | | |
-| Job Board | Build a job board application where employers can post job listings and job seekers can search and apply for jobs. | | |X | | | |
+| Job Board | Build a job board application where employers can post job listings and job seekers can search and apply for jobs. | |X | | | | |
 | ... | Description | | | | | | |
 | Last idea | Description | | | | | | |
