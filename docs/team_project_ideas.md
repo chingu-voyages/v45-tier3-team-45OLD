@@ -10,9 +10,9 @@ sentences.
 Each team member should Place an 'X' under their name to vote for the ideas 
 you like the best.
 
-| Project Idea | Description | teammate name | teammate name | teammate name | teammate name | teammate name | teammate name |
+| Project Idea | Description | @timDehof | teammate name | teammate name | teammate name | teammate name | teammate name |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| First idea | Description | | | | | | |
-| Second idea | Description | | | | | | |
+| Online Quiz platform | Create an online quiz platform where users can take quizzes, track their scores, and compete with others. | X | | | | | |
+| Job Board | Build a job board application where employers can post job listings and job seekers can search and apply for jobs. | | | | | | |
 | ... | Description | | | | | | |
 | Last idea | Description | | | | | | |
