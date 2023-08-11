@@ -10,10 +10,10 @@ sentences.
 Each team member should Place an 'X' under their name to vote for the ideas 
 you like the best.
 
-| Project Idea | Description | @timDehof | @Yi | teammate name | teammate name | teammate name | teammate name |
+| Project Idea | Description | @timDehof | @Yi | Sean | teammate name | teammate name | teammate name |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | Online Quiz platform | Create an online quiz platform where users can take quizzes, track their scores, and compete with others. | X |X | | | | |
 | Job Board | Build a job board application where employers can post job listings and job seekers can search and apply for jobs. | |X | | | | |
-| Real-time Chat Application | A discord clone that has user to user chats as well as chanels that users could message in.  This could be a pretty hefty front and back end project. Potential front end items could be JS, React, a CSS framework like bootstrap or material UI, State Managment like Redux, Real-time Updates handled with WebSockets. Potential Back end Ruby on Rails with PostgreSQL, User authentication and Authorization with bcrypt and sessions/cookies, websockets with actionCable, and if we got far enough to implement something like notifications then we would also need to set up background jobs. | |X | | | | |
+| Real-time Chat Application | A discord clone that has user to user chats as well as chanels that users could message in.  This could be a pretty hefty front and back end project. Potential front end items could be JS, React, a CSS framework like bootstrap or material UI, State Managment like Redux, Real-time Updates handled with WebSockets. Potential Back end(Writing this based on my knowledge/items I would need to research more) Ruby on Rails with PostgreSQL, User authentication and Authorization with bcrypt and sessions/cookies, websockets with actionCable, and if we got far enough to implement something like notifications then we would also need to set up background jobs. | | |X | | | |
 | ... | Description | | | | | | |
 | Last idea | Description | | | | | | |
