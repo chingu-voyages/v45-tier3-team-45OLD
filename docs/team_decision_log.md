@@ -8,7 +8,7 @@ To set this up add each teammates name in the `teammate name` column. Each
 team member should Place an 'X' under their name to vote for the ideas 
 you like the best.
 
-| No. | Question/Option | @timDehof | Teammate name | Teammate name | Teammate name | Teammate name | Teammate name |
+| No. | Question/Option | @timDehof | Sean | Teammate name | Teammate name | Teammate name | Teammate name |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | 1 | Team meeting schedule | | | | | | |
 |   |	- Sprint Planning Sunday@9:00 a.m. CST | | | | | | |
@@ -16,13 +16,13 @@ you like the best.
 |   |	- Working Session Thursday@4:00 p.m. CST | | | | | | |
 | 2	| Project Backlog Tool | | | | | | |
 |   |	- Notion | | | | | | |
-|   |	- Jira | | | | | | |
+|   |	- Jira | | x | | | | |
 | 3	| Technical Stack (vote by adding your pref. in the cell under your name) | | | | | | |
 |   |	- BE Language | | | | | | |
-|   |	- FE Language | | | | | | |
-|   |	- FE Framework | | | | | | |
+|   |	- FE Language | | JS | | | | |
+|   |	- FE Framework | | React | | | | |
 |   |	- ML Framework | | | | | | |
-|   |	- Visualization/Graphics package (if required, e.g. D3, Nivo, etc.) | | | | | | |
+|   |	- Visualization/Graphics package (if required, e.g. D3, Nivo, etc.) | | MUI | | | | |
 | 4	| Where to host the app? | | | | | | |
 |   |	- Heroku (suitable for FE, BE, & Postgres) | | | | | | |
 |   |	- Netlify (suitable only for FE) | | | | | | |
@@ -30,12 +30,12 @@ you like the best.
 |   |	- Mongo Atlas (suitable only for MongoDB) | | | | | | |
 | 5	| BE/FE repos organization | | | | | | |
 |   |	- Separate GitHub repos for each | | | | | | |
-|   |	- Single GitHub repo for both | | | | | | |
+|   |	- Single GitHub repo for both | | x | | | | |
 | 6	| Wireframing tool | | | | | | |
 |   |	- Paper & pencil | | | | | | |
 |   |	- Adobe XD | | | | | | |
 |   |	- Balsamiq | | | | | | |
-|   |	- Figma | | | | | | |
+|   |	- Figma | | x | | | | |
 | 7	| Who works in which part of the app? | | | | | | |
 |   | - BE (not applicable for Tier 1 teams) | | | | | | |
 |   |	- FE | | | | | | |
