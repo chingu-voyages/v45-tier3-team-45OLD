@@ -7,53 +7,62 @@ import {
 } from "firebase/auth";
 import { auth } from "../../firebase_config";
 import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { logo_url } from "../constants";
+import { ClipLoader } from "react-spinners";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const provider = new GoogleAuthProvider();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogIn = async (e) => {
+  const handleLogIn = (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         navigate("/dashboard");
       })
       .catch((error) => {
-        if (error.code === "auth/user-not-found") {
-          alert("user not found");
+        switch (error.code) {
+          case "auth/user-not-found":
+            toast.error("User not found.");
+            break;
+          case "auth/wrong-password":
+            toast.error("Your password is incorrect.");
+            break;
+          case "auth/invalid-email":
+            toast.error("Invalid email.");
+            break;
+          default:
+            toast.error("An error occurred during login.");
         }
-        if (error.code === "auth/wrong-password") {
-          alert("your password is wrong");
-        }
-        if (error.code === "auth/invalid-email") {
-          alert("invalid email");
-        }
+        setIsLoading(false);
         console.log(error);
       });
   };
 
-  const handleGoogleSignUp = async () => {
+  const handleGoogleSignUp = () => {
     signInWithPopup(auth, provider)
       .then(() => {
         navigate("/dashboard");
       })
       .catch((error) => {
+        toast.error("An error occurred during Google sign up.");
         console.log(error);
       });
   };
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <ToastContainer position="top-right" />
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link to="/">
-          <img
-            className="mx-auto h-28 w-auto"
-            src="https://res.cloudinary.com/yilin1234/image/upload/v1692498189/f__2_-removebg-preview_xxhyv5.png"
-            alt="logo"
-          />
+          <img className="mx-auto h-28 w-auto" src={logo_url} alt="logo" />
         </Link>
         <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Log in to your account
@@ -108,7 +117,11 @@ function Login() {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Log In
+                {isLoading ? (
+                  <ClipLoader size={15} color={"#FFFFFF"} />
+                ) : (
+                  "Log In"
+                )}
               </button>
             </div>
           </form>
@@ -136,7 +149,7 @@ function Login() {
               >
                 <img
                   src="https://res.cloudinary.com/yilin1234/image/upload/v1692507925/Google__G__Logo.svg_notatb.png"
-                  alt="Google"
+                  alt="Google Logo"
                   className="h-5 w-5"
                 />
                 <span className="text-sm font-semibold leading-6">Google</span>
