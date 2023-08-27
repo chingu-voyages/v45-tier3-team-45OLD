@@ -1,7 +1,33 @@
-import { Link } from "react-router-dom";
+import Button from "../components/Button";
+import { signOut } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase_config";
+import { useState, useEffect } from "react";
+import PacmanLoader from "react-spinners/PacmanLoader";
+import { name, logo_url } from "../constants/index";
 
 function Landing() {
-  const currentUser = null;
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setIsLoading(false);
+      setUser(currentUser);
+    });
+  }, []);
+
+  const onLogout = () => {
+    signOut(auth)
+      .then(() => {})
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  if (isLoading) {
+    return <PacmanLoader size={150} />;
+  }
 
   return (
     <div className="bg-white">
@@ -11,11 +37,7 @@ function Landing() {
           aria-label="Global"
         >
           <div className="flex lg:flex-1">
-            <img
-              className="h-28 w-auto"
-              src="https://res.cloudinary.com/yilin1234/image/upload/v1692498189/f__2_-removebg-preview_xxhyv5.png"
-              alt="logo"
-            />
+            <img className="h-28 w-auto" src={logo_url} alt="logo" />
           </div>
         </nav>
       </header>
@@ -25,37 +47,20 @@ function Landing() {
           <div className="hidden sm:mb-8 sm:flex sm:justify-center"></div>
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              facebook clone
+              {name}
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
               Connect with friends and the world around you on Facebook.
             </p>
-            {currentUser === null ? (
+            {user === null ? (
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                <Link
-                  to="/login"
-                  className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Log in
-                </Link>
-                <Link
-                  to="/signup"
-                  className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Sign up
-                </Link>
+                <Button title="Log in" path="/login" />
+                <Button title="sign up" path="/signup" />
               </div>
             ) : (
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                <Link
-                  to="/dashboard/all-recipes"
-                  className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  dashboard
-                </Link>
-                <div className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                  logout
-                </div>
+                <Button title="Dashboard" path="/dashboard" />
+                <Button title="log out" onClick={onLogout} />
               </div>
             )}
           </div>

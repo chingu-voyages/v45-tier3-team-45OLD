@@ -11,6 +11,7 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { auth } from "../../firebase_config";
 import { signOut } from "firebase/auth";
+import { logo_url } from "../constants/index";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -40,7 +41,7 @@ function Dashboard() {
     },
   ];
 
-  const onLogout = async (e) => {
+  const onLogout = (e) => {
     e.preventDefault();
     signOut(auth)
       .then(() => {
@@ -110,8 +111,8 @@ function Dashboard() {
                     <Link to="/">
                       <img
                         className="h-16 w-auto"
-                        src="https://res.cloudinary.com/yilin1234/image/upload/v1692498189/f__2_-removebg-preview_xxhyv5.png"
-                        alt="logo"
+                        src={logo_url}
+                        alt="application logo"
                       />
                     </Link>
                   </div>
@@ -163,11 +164,7 @@ function Dashboard() {
         <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
           <div className="flex h-16 shrink-0 items-center">
             <Link to="/">
-              <img
-                className="h-16 w-auto"
-                src="https://res.cloudinary.com/yilin1234/image/upload/v1692498189/f__2_-removebg-preview_xxhyv5.png"
-                alt="logo"
-              />
+              <img className="h-16 w-auto" src={logo_url} alt="logo" />
             </Link>
           </div>
           <nav className="flex flex-1 flex-col">
@@ -235,7 +232,11 @@ function Dashboard() {
                 <Menu.Button className="-m-1.5 flex items-center p-1.5">
                   <img
                     className="h-10 w-10 rounded-full bg-gray-50 object-cover"
-                    src={currentUser ? currentUser.photoURL : "loading"}
+                    src={
+                      currentUser.photoURL
+                        ? currentUser.photoURL
+                        : "https://res.cloudinary.com/yilin1234/image/upload/v1692746214/istockphoto-1337144146-612x612_rtbsc1.jpg"
+                    }
                     alt="User Profile"
                   />
                   <span className="hidden lg:flex lg:items-center">
@@ -243,7 +244,8 @@ function Dashboard() {
                       className="ml-4 text-sm font-semibold leading-6 text-gray-900"
                       aria-hidden="true"
                     >
-                      {currentUser ? currentUser.displayName : "loading"}
+                      {currentUser.displayName ||
+                        currentUser.email.split("@")[0]}
                     </span>
                     <ChevronDownIcon
                       className="ml-2 h-5 w-5 text-gray-400"

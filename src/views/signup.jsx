@@ -6,6 +6,10 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { auth } from "../../firebase_config";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { logo_url } from "../constants/index";
+import { ClipLoader } from "react-spinners";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -14,31 +18,39 @@ function Signup() {
 
   const provider = new GoogleAuthProvider();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSignUp = async (e) => {
+  const handleSignUp = (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (password !== confirmPassword) {
-      alert("password don't match");
+      toast.error("Passwords don't match!");
       return;
     }
 
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
-        alert("sign up successfully");
+        navigate("/dashboard");
       })
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {
-          alert("email address is already in use");
+          toast.error("Email address is already in use");
         }
         if (error.code === "auth/invalid-email") {
-          alert("email address is invalid");
+          toast.error("Email address is invalid");
+        }
+        if (error.code === "auth/weak-password") {
+          toast.error("Password must be at least 6 characters");
         }
         console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
-  const handleGoogleSignUp = async () => {
+  const handleGoogleSignUp = () => {
     signInWithPopup(auth, provider)
       .then(() => {
         navigate("/dashboard");
@@ -50,13 +62,10 @@ function Signup() {
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <ToastContainer position="top-right" />
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link to="/">
-          <img
-            className="mx-auto h-28 w-auto"
-            src="https://res.cloudinary.com/yilin1234/image/upload/v1692498189/f__2_-removebg-preview_xxhyv5.png"
-            alt="logo"
-          />
+          <img className="mx-auto h-28 w-auto" src={logo_url} alt="logo" />
         </Link>
         <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign up for a new account
@@ -131,7 +140,11 @@ function Signup() {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Create new account
+                {isLoading ? (
+                  <ClipLoader size={15} color={"#FFFFFF"} />
+                ) : (
+                  "Create new account"
+                )}
               </button>
             </div>
           </form>
@@ -159,7 +172,7 @@ function Signup() {
               >
                 <img
                   src="https://res.cloudinary.com/yilin1234/image/upload/v1692507925/Google__G__Logo.svg_notatb.png"
-                  alt="Google"
+                  alt="Google Logo"
                   className="h-5 w-5"
                 />
                 <span className="text-sm font-semibold leading-6">Google</span>
