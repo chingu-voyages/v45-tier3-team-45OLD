@@ -2,24 +2,21 @@ import { useState, useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../firebase_config';
+import PacmanLoader from 'react-spinners/PacmanLoader';
 
 function PrivateRoutes() {
 	const [user, setUser] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		onAuthStateChanged(auth, (user) => {
+		onAuthStateChanged(auth, (currentUser) => {
 			setIsLoading(false);
-			if (user) {
-				setUser(user);
-			} else {
-				setUser(null);
-			}
+			setUser(currentUser);
 		});
 	}, []);
 
 	if (isLoading) {
-		return <div>Loading ...</div>;
+		return <PacmanLoader size={150} />;
 	}
 
 	return user ? <Outlet /> : <Navigate to="/" />;

@@ -7,61 +7,70 @@ import {
 } from 'firebase/auth';
 import { auth } from '../../firebase_config';
 import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { logoUrl } from '../constants';
+import { ClipLoader } from 'react-spinners';
 
 function Login() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const provider = new GoogleAuthProvider();
 	const navigate = useNavigate();
+	const [isLoading, setIsLoading] = useState(false);
 
-	const handleLogIn = async (e) => {
+	const handleLogIn = (e) => {
 		e.preventDefault();
+		setIsLoading(true);
 
 		signInWithEmailAndPassword(auth, email, password)
 			.then(() => {
 				navigate('/dashboard');
 			})
 			.catch((error) => {
-				if (error.code === 'auth/user-not-found') {
-					alert('user not found');
+				switch (error.code) {
+					case 'auth/user-not-found':
+						toast.error('User not found.');
+						break;
+					case 'auth/wrong-password':
+						toast.error('Your password is incorrect.');
+						break;
+					case 'auth/invalid-email':
+						toast.error('Invalid email.');
+						break;
+					default:
+						toast.error('An error occurred during login.');
 				}
-				if (error.code === 'auth/wrong-password') {
-					alert('your password is wrong');
-				}
-				if (error.code === 'auth/invalid-email') {
-					alert('invalid email');
-				}
+				setIsLoading(false);
 				console.log(error);
 			});
 	};
 
-	const handleGoogleSignUp = async () => {
+	const handleGoogleSignUp = () => {
 		signInWithPopup(auth, provider)
 			.then(() => {
 				navigate('/dashboard');
 			})
 			.catch((error) => {
+				toast.error('An error occurred during Google sign up.');
 				console.log(error);
 			});
 	};
 
 	return (
-		<div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
+		<div className="flex flex-col justify-center flex-1 min-h-full py-12 sm:px-6 lg:px-8">
+			<ToastContainer position="top-right" />
 			<div className="sm:mx-auto sm:w-full sm:max-w-md">
 				<Link to="/">
-					<img
-						className="mx-auto h-28 w-auto"
-						src="https://res.cloudinary.com/yilin1234/image/upload/v1692498189/f__2_-removebg-preview_xxhyv5.png"
-						alt="logo"
-					/>
+					<img className="w-auto mx-auto h-28" src={logoUrl} alt="logo" />
 				</Link>
-				<h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+				<h2 className="mt-6 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900">
 					Log in to your account
 				</h2>
 			</div>
 
 			<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-				<div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+				<div className="px-6 py-12 bg-white shadow sm:rounded-lg sm:px-12">
 					<form className="space-y-6" onSubmit={handleLogIn}>
 						<div>
 							<label
@@ -108,7 +117,11 @@ function Login() {
 								type="submit"
 								className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 							>
-								Log In
+								{isLoading ? (
+									<ClipLoader size={15} color={'#FFFFFF'} />
+								) : (
+									'Log In'
+								)}
 							</button>
 						</div>
 					</form>
@@ -122,7 +135,7 @@ function Login() {
 								<div className="w-full border-t border-gray-200" />
 							</div>
 							<div className="relative flex justify-center text-sm font-medium leading-6">
-								<span className="bg-white px-6 text-gray-900">
+								<span className="px-6 text-gray-900 bg-white">
 									Or continue with
 								</span>
 							</div>
@@ -136,8 +149,8 @@ function Login() {
 							>
 								<img
 									src="https://res.cloudinary.com/yilin1234/image/upload/v1692507925/Google__G__Logo.svg_notatb.png"
-									alt="Google"
-									className="h-5 w-5"
+									alt="Google Logo"
+									className="w-5 h-5"
 								/>
 								<span className="text-sm font-semibold leading-6">Google</span>
 							</button>
@@ -145,7 +158,7 @@ function Login() {
 					</div>
 				</div>
 
-				<p className="mt-10 text-center text-sm text-gray-500">
+				<p className="mt-10 text-sm text-center text-gray-500">
 					Don't have an account?{' '}
 					<Link
 						to="/signup"

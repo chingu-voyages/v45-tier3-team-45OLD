@@ -6,6 +6,10 @@ import {
 	signInWithPopup,
 } from 'firebase/auth';
 import { auth } from '../../firebase_config';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { logoUrl } from '../constants';
+import { ClipLoader } from 'react-spinners';
 
 function Signup() {
 	const [email, setEmail] = useState('');
@@ -14,31 +18,39 @@ function Signup() {
 
 	const provider = new GoogleAuthProvider();
 	const navigate = useNavigate();
+	const [isLoading, setIsLoading] = useState(false);
 
-	const handleSignUp = async (e) => {
+	const handleSignUp = (e) => {
 		e.preventDefault();
+		setIsLoading(true);
 
 		if (password !== confirmPassword) {
-			alert("password don't match");
+			toast.error("Passwords don't match!");
 			return;
 		}
 
 		createUserWithEmailAndPassword(auth, email, password)
 			.then(() => {
-				alert('sign up successfully');
+				navigate('/dashboard');
 			})
 			.catch((error) => {
 				if (error.code === 'auth/email-already-in-use') {
-					alert('email address is already in use');
+					toast.error('Email address is already in use');
 				}
 				if (error.code === 'auth/invalid-email') {
-					alert('email address is invalid');
+					toast.error('Email address is invalid');
+				}
+				if (error.code === 'auth/weak-password') {
+					toast.error('Password must be at least 6 characters');
 				}
 				console.log(error);
+			})
+			.finally(() => {
+				setIsLoading(false);
 			});
 	};
 
-	const handleGoogleSignUp = async () => {
+	const handleGoogleSignUp = () => {
 		signInWithPopup(auth, provider)
 			.then(() => {
 				navigate('/dashboard');
@@ -49,22 +61,19 @@ function Signup() {
 	};
 
 	return (
-		<div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
+		<div className="flex flex-col justify-center flex-1 min-h-full py-12 sm:px-6 lg:px-8">
+			<ToastContainer position="top-right" />
 			<div className="sm:mx-auto sm:w-full sm:max-w-md">
 				<Link to="/">
-					<img
-						className="mx-auto h-28 w-auto"
-						src="https://res.cloudinary.com/yilin1234/image/upload/v1692498189/f__2_-removebg-preview_xxhyv5.png"
-						alt="logo"
-					/>
+					<img className="w-auto mx-auto h-28" src={logoUrl} alt="logo" />
 				</Link>
-				<h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+				<h2 className="mt-6 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900">
 					Sign up for a new account
 				</h2>
 			</div>
 
 			<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-				<div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+				<div className="px-6 py-12 bg-white shadow sm:rounded-lg sm:px-12">
 					<form className="space-y-6" onSubmit={handleSignUp}>
 						<div>
 							<label
@@ -131,7 +140,11 @@ function Signup() {
 								type="submit"
 								className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 							>
-								Create new account
+								{isLoading ? (
+									<ClipLoader size={15} color={'#FFFFFF'} />
+								) : (
+									'Create new account'
+								)}
 							</button>
 						</div>
 					</form>
@@ -145,7 +158,7 @@ function Signup() {
 								<div className="w-full border-t border-gray-200" />
 							</div>
 							<div className="relative flex justify-center text-sm font-medium leading-6">
-								<span className="bg-white px-6 text-gray-900">
+								<span className="px-6 text-gray-900 bg-white">
 									Or continue with
 								</span>
 							</div>
@@ -159,8 +172,8 @@ function Signup() {
 							>
 								<img
 									src="https://res.cloudinary.com/yilin1234/image/upload/v1692507925/Google__G__Logo.svg_notatb.png"
-									alt="Google"
-									className="h-5 w-5"
+									alt="Google Logo"
+									className="w-5 h-5"
 								/>
 								<span className="text-sm font-semibold leading-6">Google</span>
 							</button>
@@ -168,7 +181,7 @@ function Signup() {
 					</div>
 				</div>
 
-				<p className="mt-10 text-center text-sm text-gray-500">
+				<p className="mt-10 text-sm text-center text-gray-500">
 					Already have an account?{' '}
 					<Link
 						to="/login"

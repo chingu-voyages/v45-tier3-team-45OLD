@@ -1,6 +1,5 @@
 import { Fragment, useState } from 'react';
 import { Link, useNavigate, Outlet } from 'react-router-dom';
-
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
 	Bars3Icon,
@@ -11,6 +10,7 @@ import {
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { auth } from '../../firebase_config';
 import { signOut } from 'firebase/auth';
+import { logoUrl } from '../constants';
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
@@ -81,7 +81,7 @@ function Dashboard() {
 							leaveFrom="translate-x-0"
 							leaveTo="-translate-x-full"
 						>
-							<Dialog.Panel className="relative mr-16 flex w-full max-w-xs flex-1">
+							<Dialog.Panel className="relative flex flex-1 w-full max-w-xs mr-16">
 								<Transition.Child
 									as={Fragment}
 									enter="ease-in-out duration-300"
@@ -91,32 +91,32 @@ function Dashboard() {
 									leaveFrom="opacity-100"
 									leaveTo="opacity-0"
 								>
-									<div className="absolute left-full top-0 flex w-16 justify-center pt-5">
+									<div className="absolute top-0 flex justify-center w-16 pt-5 left-full">
 										<button
 											type="button"
 											className="-m-2.5 p-2.5"
 											onClick={() => setSidebarOpen(false)}
 										>
 											<XMarkIcon
-												className="h-6 w-6 text-white"
+												className="w-6 h-6 text-white"
 												aria-hidden="true"
 											/>
 										</button>
 									</div>
 								</Transition.Child>
 								{/* Sidebar component, swap this element with another sidebar if you like */}
-								<div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
-									<div className="flex h-16 shrink-0 items-center">
+								<div className="flex flex-col px-6 pb-4 overflow-y-auto bg-white grow gap-y-5">
+									<div className="flex items-center h-16 shrink-0">
 										<Link to="/">
 											<img
-												className="h-16 w-auto"
-												src="https://res.cloudinary.com/yilin1234/image/upload/v1692498189/f__2_-removebg-preview_xxhyv5.png"
-												alt="logo"
+												className="w-auto h-16"
+												src={logoUrl}
+												alt="application logo"
 											/>
 										</Link>
 									</div>
-									<nav className="flex flex-1 flex-col">
-										<ul className="flex flex-1 flex-col gap-y-7">
+									<nav className="flex flex-col flex-1">
+										<ul className="flex flex-col flex-1 gap-y-7">
 											<li>
 												<ul className="-mx-2 space-y-1">
 													{navigation.map((item) => (
@@ -160,18 +160,14 @@ function Dashboard() {
 			{/* Static sidebar for desktop */}
 			<div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
 				{/* Sidebar component, swap this element with another sidebar if you like */}
-				<div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
-					<div className="flex h-16 shrink-0 items-center">
+				<div className="flex flex-col px-6 pb-4 overflow-y-auto bg-white border-r border-gray-200 grow gap-y-5">
+					<div className="flex items-center h-16 shrink-0">
 						<Link to="/">
-							<img
-								className="h-16 w-auto"
-								src="https://res.cloudinary.com/yilin1234/image/upload/v1692498189/f__2_-removebg-preview_xxhyv5.png"
-								alt="logo"
-							/>
+							<img className="w-auto h-16" src={logoUrl} alt="logo" />
 						</Link>
 					</div>
-					<nav className="flex flex-1 flex-col">
-						<ul className="flex flex-1 flex-col gap-y-7">
+					<nav className="flex flex-col flex-1">
+						<ul className="flex flex-col flex-1 gap-y-7">
 							<li>
 								<ul className="-mx-2 space-y-1">
 									{navigation.map((item) => (
@@ -209,19 +205,19 @@ function Dashboard() {
 			</div>
 
 			<div className="lg:pl-72">
-				<div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+				<div className="sticky top-0 z-40 flex items-center h-16 px-4 bg-white border-b border-gray-200 shadow-sm shrink-0 gap-x-4 sm:gap-x-6 sm:px-6 lg:px-8">
 					<button
 						type="button"
 						className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
 						onClick={() => setSidebarOpen(true)}
 					>
-						<Bars3Icon className="h-6 w-6" aria-hidden="true" />
+						<Bars3Icon className="w-6 h-6" aria-hidden="true" />
 					</button>
 
 					{/* Separator */}
-					<div className="h-6 w-px bg-gray-200 lg:hidden" aria-hidden="true" />
+					<div className="w-px h-6 bg-gray-200 lg:hidden" aria-hidden="true" />
 
-					<div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
+					<div className="flex self-stretch flex-1 gap-x-4 lg:gap-x-6">
 						<div className="relative flex flex-1"></div>
 						<div className="flex items-center gap-x-4 lg:gap-x-6">
 							{/* Separator */}
@@ -234,8 +230,12 @@ function Dashboard() {
 							<Menu as="div" className="relative">
 								<Menu.Button className="-m-1.5 flex items-center p-1.5">
 									<img
-										className="h-10 w-10 rounded-full bg-gray-50 object-cover"
-										src={currentUser ? currentUser.photoURL : 'loading'}
+										className="object-cover w-10 h-10 rounded-full bg-gray-50"
+										src={
+											currentUser
+												? currentUser.photoURL
+												: 'https://res.cloudinary.com/yilin1234/image/upload/v1692746214/istockphoto-1337144146-612x612_rtbsc1.jpg'
+										}
 										alt="User Profile"
 									/>
 									<span className="hidden lg:flex lg:items-center">
@@ -243,10 +243,11 @@ function Dashboard() {
 											className="ml-4 text-sm font-semibold leading-6 text-gray-900"
 											aria-hidden="true"
 										>
-											{currentUser ? currentUser.displayName : 'loading'}
+											{currentUser.displayName ||
+												currentUser.email.split('@')[0]}
 										</span>
 										<ChevronDownIcon
-											className="ml-2 h-5 w-5 text-gray-400"
+											className="w-5 h-5 ml-2 text-gray-400"
 											aria-hidden="true"
 										/>
 									</span>
@@ -282,7 +283,7 @@ function Dashboard() {
 													onClick={onLogout}
 													className={classNames(
 														active ? 'bg-gray-50' : '',
-														'block px-3 py-1 text-sm leading-6 text-gray-900'
+														'block px-3 py-1 cursor-pointer text-sm leading-6 text-gray-900'
 													)}
 												>
 													sign out
