@@ -11,9 +11,10 @@
 		"plugin:react/recommended",
 		"plugin:react/jsx-runtime",
 		"plugin:react-hooks/recommended",
-		"plugin:tailwindcss/recommended"
+		"plugin:tailwindcss/recommended",
+		"plugin:prettier/recommended"
 	],
-	"ignorePatterns": ["dist", ".eslintrc.cjs"],
+	"ignorePatterns": ["dist", ".eslintrc.cjs", "node_modules/*"],
 	"parserOptions": {
 		"ecmaFeatures": {
 			"jsx": true
@@ -23,9 +24,32 @@
 	},
 	"plugins": ["react-refresh"],
 	"rules": {
+		"linebreak-style": ["error", "unix"],
+		"react/prop-types": "off",
+		"import/order": [
+			"error",
+			{
+				"groups": [
+					"builtin",
+					"external",
+					"internal",
+					"parent",
+					"sibling",
+					"index",
+					"object"
+				],
+				"newlines-between": "always",
+				"alphabetize": { "order": "asc", "caseInsensitive": true }
+			}
+		],
+		"import/default": "off",
+		"import/no-named-as-default-member": "off",
+		"import/no-named-as-default": "off",
+		"react/react-in-jsx-scope": "off",
 		"react-refresh/only-export-components": [
 			"warn",
 			{ "allowConstantExport": true }
-		]
+		],
+		"prettier/prettier": ["error", {}, { "usePrettierrc": true }]
 	}
 }
