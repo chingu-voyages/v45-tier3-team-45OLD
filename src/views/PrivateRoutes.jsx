@@ -29,7 +29,7 @@ function PrivateRoutes() {
   }, [dispatch]);
 
   if (isLoading) {
-    return <div>Loading ...</div>;
+    return <PacmanLoader size={150} />;
   }
 
   return isAuthenticated ? <Outlet /> : <Navigate to='/' />;
