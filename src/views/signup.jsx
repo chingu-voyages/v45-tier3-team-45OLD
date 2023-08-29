@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { logo_url } from "../constants/index";
 import { ClipLoader } from "react-spinners";
 
+
 function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +34,7 @@ function Signup() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         createNewUser(userCredential.user.email);
-        alert("sign up successfully");
+        toast.success("sign up successfully");
       })
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {
@@ -58,6 +59,7 @@ function Signup() {
 
         createNewUser(userCredential.user.email);
         navigate("/dashboard");
+
       })
       .catch((error) => {
         console.log(error);
@@ -65,11 +67,11 @@ function Signup() {
   };
 
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="flex flex-col justify-center flex-1 min-h-full py-12 sm:px-6 lg:px-8">
       <ToastContainer position="top-right" />
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link to="/">
-          <img className="mx-auto h-28 w-auto" src={logo_url} alt="logo" />
+          <img className="w-auto mx-auto h-28" src={logo_url} alt="logo" />
         </Link>
         <h2 className='mt-6 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900'>
           Sign up for a new account
@@ -172,7 +174,7 @@ function Signup() {
                 <img
                   src="https://res.cloudinary.com/yilin1234/image/upload/v1692507925/Google__G__Logo.svg_notatb.png"
                   alt="Google Logo"
-                  className="h-5 w-5"
+                  className="w-5 h-5"
                 />
                 <span className='text-sm font-semibold leading-6'>Google</span>
               </button>

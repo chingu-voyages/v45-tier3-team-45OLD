@@ -12,6 +12,8 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { auth } from "../../firebase_config";
 import { signOut } from "firebase/auth";
 import { logo_url } from "../constants/index";
+import { removeUser } from "../features/auth/authSlice";
+import { useDispatch,  useSelector } from "react-redux";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -21,9 +23,10 @@ function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentTab, setCurrentTab] = useState("");
 
-  const currentUser = auth.currentUser;
+  const currentUser = useSelector((state) => state.user.value);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const navigation = [
     {
@@ -44,6 +47,7 @@ function Dashboard() {
     e.preventDefault();
     signOut(auth)
       .then(() => {
+        dispatch(removeUser());
         navigate("/");
       })
       .catch((error) => {
@@ -104,7 +108,7 @@ function Dashboard() {
                   <div className='flex items-center h-16 shrink-0'>
                     <Link to='/'>
                       <img
-                        className="h-16 w-auto"
+                        className="w-auto h-16"
                         src={logo_url}
                         alt="application logo"
                       />
@@ -153,10 +157,10 @@ function Dashboard() {
       {/* Static sidebar for desktop */}
       <div className='hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col'>
         {/* Sidebar component, swap this element with another sidebar if you like */}
-        <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
-          <div className="flex h-16 shrink-0 items-center">
+        <div className="flex flex-col px-6 pb-4 overflow-y-auto bg-white border-r border-gray-200 grow gap-y-5">
+          <div className="flex items-center h-16 shrink-0">
             <Link to="/">
-              <img className="h-16 w-auto" src={logo_url} alt="logo" />
+              <img className="w-auto h-16" src={logo_url} alt="logo" />
             </Link>
           </div>
           <nav className='flex flex-col flex-1'>
@@ -221,7 +225,7 @@ function Dashboard() {
                 <Menu.Button className='-m-1.5 flex items-center p-1.5'>
                   <img
                     className='object-cover w-10 h-10 rounded-full bg-gray-50'
-                    src={currentUser ? currentUser.photoURL : "loading"}
+                    src={currentUser.picture}
                     alt='User Profile'
                   />
                   <span className='hidden lg:flex lg:items-center'>
@@ -229,8 +233,7 @@ function Dashboard() {
                       className="ml-4 text-sm font-semibold leading-6 text-gray-900"
                       aria-hidden="true"
                     >
-                      {currentUser.displayName ||
-                        currentUser.email.split("@")[0]}
+                      {currentUser.username}
                     </span>
                     <ChevronDownIcon
                       className='w-5 h-5 ml-2 text-gray-400'

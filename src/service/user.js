@@ -1,5 +1,5 @@
 import { db } from "../../firebase_config";
-import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
+import { addDoc, collection, query, where, getDocs,getDoc, updateDoc, doc } from "firebase/firestore";
 
 //🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢( POST )🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢
 
@@ -28,11 +28,11 @@ export const createNewUser = async (email) => {
   }
 };
 
-// //🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵( GET )🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵
+ //🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵( GET )🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵 🔵
 
 export const getUserByEmail = async (email) => {
   const usersCollection = collection(db, "users");
-  const q = query(usersCollection, where("username", "==", email));
+  const q = query(usersCollection, where("email", "==", email));
   const querySnapshot = await getDocs(q);
 
   if (!querySnapshot.empty) {
@@ -43,8 +43,71 @@ export const getUserByEmail = async (email) => {
   }
 };
 
-// //🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡( PUT )🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡
+//🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡( PUT )🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡
 
-// export const updateUserById = async (id: string, body: UserUpdateBody) => {
-//     await instance.put(update-user/${id}, body);
+// export const updateUserByEmail = async (email, body) => {
+//   const usersCollection = collection(db, "users");
+//   const q = query(usersCollection, where("email", "==", email));
+//   const querySnapshot = await getDocs(q);
+
+//   if (!querySnapshot.empty) {
+//     const userDoc = querySnapshot.docs[0];
+//     const userRef = doc(db, "users", userDoc.id);
+
+//     try {
+//       await updateDoc(userRef, body);
+//       console.log("User profile updated successfully");
+//     } catch (error) {
+//       console.error("Error updating user profile:", error);
+//     }
+//   } else {
+//     console.error("No user found with the provided email");
+//   }
 // };
+
+
+// Check if a username is already taken by another user
+async function isUsernameTakenByOtherUser(username, email) {
+  const usersCollection = collection(db, "users");
+  const q = query(usersCollection, where("username", "==", username));
+  const querySnapshot = await getDocs(q);
+
+  if (!querySnapshot.empty) {
+    const existingUserDoc = querySnapshot.docs[0];
+    const existingUserEmail = existingUserDoc.data().email;
+    return existingUserEmail !== email; // Return true if the username is taken by another user
+  }
+
+  return false; // Username is not taken by another user
+}
+
+// Create or update a user profile with username uniqueness check
+export async function updateUserByEmail(email, username, profilePictureUrl, aboutMe) {
+  const isTakenByOtherUser = await isUsernameTakenByOtherUser(username, email);
+
+  if (isTakenByOtherUser) {
+    throw new Error("Username is already taken by another user");
+    return;
+  }
+
+  const usersCollection = collection(db, "users");
+  const q = query(usersCollection, where("email", "==", email));
+  const querySnapshot = await getDocs(q);
+
+  try {
+    if (!querySnapshot.empty) {
+      const userDoc = querySnapshot.docs[0];
+      const userDocRef = doc(usersCollection, userDoc.id);
+
+      // Update the user profile
+      await updateDoc(userDocRef, {
+        username: username,
+        picture: profilePictureUrl,
+        about: aboutMe,
+      });
+
+    }
+  } catch (error) {
+    console.error("Error updating user profile:", error);
+  }
+}

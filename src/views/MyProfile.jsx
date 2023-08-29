@@ -2,9 +2,11 @@ import { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-
+import { updateUserByEmail } from "../service/user";
 import { PhotoIcon, ArrowUpOnSquareIcon } from "@heroicons/react/24/solid";
 import { ArrowPathIcon } from "@heroicons/react/20/solid";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function MyProfile() {
   const [username, setUsername] = useState("");
@@ -37,13 +39,13 @@ function MyProfile() {
       }
     } catch (error) {
       console.error(error);
-      alert("Error uploading image.");
+      toast.error("Error uploading image.");
     }
   }
 
   async function handleOnUpdate(e) {
     e.preventDefault();
-    let profilePictureUrl = currentUser.profilePictureUrl;
+    let profilePictureUrl = currentUser.picture;
 
     // If there is a new image, upload it
     if (image) {
@@ -51,16 +53,17 @@ function MyProfile() {
       if (!profilePictureUrl) return; // Return if image upload failed
     }
 
-    // Initialize request body
-    const body = {
-      username: username,
-      picture: profilePictureUrl,
-      about: aboutMe,
-    };
-
     try {
-      await updateUserProfile(body);
+      await updateUserByEmail(
+        currentUser.email,
+        username,
+        profilePictureUrl,
+        aboutMe,
+      );
+      toast.success("User profile updated. refresh to see the changes.");
+      // navigate(0);
     } catch (error) {
+      toast.error(error.message);
       console.error("Error:", error);
     }
   }
@@ -78,6 +81,7 @@ function MyProfile() {
 
   return (
     <div className='p-10'>
+      <ToastContainer position='bottom-right' />
       <form onSubmit={handleOnUpdate}>
         <h2 className='text-base font-semibold leading-7 text-gray-900'>
           profile
@@ -181,7 +185,7 @@ function MyProfile() {
           <button
             type='submit'
             className='px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
-            save
+            update
           </button>
         </div>
       </form>
