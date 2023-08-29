@@ -1,13 +1,5 @@
 import { db } from "../../firebase_config";
-import {
-  addDoc,
-  collection,
-  query,
-  where,
-  getDocs,
-  updateDoc,
-  doc,
-} from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 
 //🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢( POST )🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢
 

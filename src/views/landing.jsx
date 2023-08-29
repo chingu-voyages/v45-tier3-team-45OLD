@@ -1,12 +1,9 @@
 import Button from "../components/Button";
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 // import PacmanLoader from "react-spinners/PacmanLoader";
 import { name, logo_url } from "../constants/index";
-
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase_config";
-import { getUserByEmail } from "../service/user";
 import { removeUser } from "../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 function Landing() {
@@ -55,29 +52,13 @@ function Landing() {
             </p>
             {!isAuthenticated ? (
               <div className='flex items-center justify-center mt-10 gap-x-6'>
-                <Link
-                  to='/login'
-                  className='rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
-                  Log in
-                </Link>
-                <Link
-                  to='/signup'
-                  className='rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
-                  Sign up
-                </Link>
+                <Button title={"Log in"} path={"/login"} />
+                <Button title={"Sign up"} path={"/signup"} />
               </div>
             ) : (
               <div className='flex items-center justify-center mt-10 gap-x-6'>
-                <Link
-                  to='/dashboard'
-                  className='rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
-                  dashboard
-                </Link>
-                <div
-                  onClick={onLogout}
-                  className='rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
-                  logout
-                </div>
+                <Button title={"dashboard"} path={"/dashboard"} />
+                <Button title={"logout"} onClick={onLogout} />
               </div>
             )}
           </div>

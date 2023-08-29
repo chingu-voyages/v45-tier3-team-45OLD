@@ -1,4 +1,4 @@
-import { useState, useEffect, FormEvent, ChangeEvent } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -20,7 +20,7 @@ function MyProfile() {
   function handleImageChange(e) {
     const { files } = e.target;
     if (files && files.length !== 0) {
-      setImage((prevState) => files[0]);
+      setImage(files[0]);
       setImagePreview(URL.createObjectURL(files[0]));
     }
   }

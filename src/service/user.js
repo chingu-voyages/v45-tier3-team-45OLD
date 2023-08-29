@@ -1,5 +1,5 @@
 import { db } from "../../firebase_config";
-import { addDoc, collection, query, where, getDocs,getDoc, updateDoc, doc } from "firebase/firestore";
+import { addDoc, collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
 
 //🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢( POST )🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢
 
@@ -16,7 +16,7 @@ export const createNewUser = async (email) => {
   const userSnap = await getDocs(userQuery);
 
   if (userSnap.empty) {
-    const docRef = await addDoc(collection(db, "users"), {
+    await addDoc(collection(db, "users"), {
       username: defaultUsername,
       picture: defaultProfilePic,
       about: defaultAbout,
@@ -87,7 +87,6 @@ export async function updateUserByEmail(email, username, profilePictureUrl, abou
 
   if (isTakenByOtherUser) {
     throw new Error("Username is already taken by another user");
-    return;
   }
 
   const usersCollection = collection(db, "users");
