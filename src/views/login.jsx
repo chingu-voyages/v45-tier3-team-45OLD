@@ -62,7 +62,7 @@ function Login() {
 			<ToastContainer position="top-right" />
 			<div className="sm:mx-auto sm:w-full sm:max-w-md">
 				<Link to="/">
-					<img className="w-auto mx-auto h-28" src={logoUrl} alt="logo" />
+					<img className="w-auto mx-auto h-28" src={logo_url} alt="logo" />
 				</Link>
 				<h2 className="mt-6 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900">
 					Log in to your account

@@ -1,33 +1,32 @@
 import Button from '../components/Button';
-import { signOut } from 'firebase/auth';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../../firebase_config';
 import { useState, useEffect } from 'react';
-import PacmanLoader from 'react-spinners/PacmanLoader';
+// import PacmanLoader from "react-spinners/PacmanLoader";
 import { name, logoUrl } from '../constants/index';
-
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth } from '../../firebase_config';
+import { removeUser } from '../features/auth/authSlice';
+import { useDispatch } from 'react-redux';
 function Landing() {
-	const [user, setUser] = useState(null);
-	const [isLoading, setIsLoading] = useState(true);
-
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const dispatch = useDispatch();
 	useEffect(() => {
-		onAuthStateChanged(auth, (currentUser) => {
-			setIsLoading(false);
-			setUser(currentUser);
+		onAuthStateChanged(auth, (user) => {
+			if (user) {
+				setIsAuthenticated(true);
+			} else {
+				setIsAuthenticated(false);
+			}
 		});
 	}, []);
-
 	const onLogout = () => {
 		signOut(auth)
-			.then(() => {})
+			.then(() => {
+				dispatch(removeUser());
+			})
 			.catch((error) => {
 				console.error(error);
 			});
 	};
-
-	if (isLoading) {
-		return <PacmanLoader size={150} />;
-	}
 
 	return (
 		<div className="bg-white">
@@ -52,15 +51,15 @@ function Landing() {
 						<p className="mt-6 text-lg leading-8 text-gray-600">
 							Connect with friends and the world around you on Facebook.
 						</p>
-						{user === null ? (
+						{!isAuthenticated ? (
 							<div className="flex items-center justify-center mt-10 gap-x-6">
-								<Button title="Log in" path="/login" />
-								<Button title="sign up" path="/signup" />
+								<Button title={'Log in'} path={'/login'} />
+								<Button title={'Sign up'} path={'/signup'} />
 							</div>
 						) : (
 							<div className="flex items-center justify-center mt-10 gap-x-6">
-								<Button title="Dashboard" path="/dashboard" />
-								<Button title="log out" onClick={onLogout} />
+								<Button title={'dashboard'} path={'/dashboard'} />
+								<Button title={'logout'} onClick={onLogout} />
 							</div>
 						)}
 					</div>

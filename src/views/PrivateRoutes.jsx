@@ -2,24 +2,37 @@ import { useState, useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../firebase_config';
-import PacmanLoader from 'react-spinners/PacmanLoader';
+import { getUserByEmail } from '../service/user';
+import { setUser } from '../features/auth/authSlice';
+import { useDispatch } from 'react-redux';
 
 function PrivateRoutes() {
-	const [user, setUser] = useState(null);
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		onAuthStateChanged(auth, (currentUser) => {
+		onAuthStateChanged(auth, async (user) => {
+			setIsAuthenticated(false);
+			if (user && user.email) {
+				try {
+					const data = await getUserByEmail(user.email);
+
+					dispatch(setUser(data));
+					setIsAuthenticated(true);
+				} catch (error) {
+					console.error('Error fetching user data:', error);
+				}
+			}
 			setIsLoading(false);
-			setUser(currentUser);
 		});
-	}, []);
+	}, [dispatch]);
 
 	if (isLoading) {
-		return <PacmanLoader size={150} />;
+		return <div>loading...</div>;
 	}
 
-	return user ? <Outlet /> : <Navigate to="/" />;
+	return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
 }
 
 export default PrivateRoutes;

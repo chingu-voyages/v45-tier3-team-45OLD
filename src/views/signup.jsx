@@ -5,10 +5,11 @@ import {
 	GoogleAuthProvider,
 	signInWithPopup,
 } from 'firebase/auth';
+import { createNewUser } from '../service/user';
 import { auth } from '../../firebase_config';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { logoUrl } from '../constants';
+import { logoUrl } from '../constants/index';
 import { ClipLoader } from 'react-spinners';
 
 function Signup() {
@@ -30,8 +31,9 @@ function Signup() {
 		}
 
 		createUserWithEmailAndPassword(auth, email, password)
-			.then(() => {
-				navigate('/dashboard');
+			.then((userCredential) => {
+				createNewUser(userCredential.user.email);
+				toast.success('sign up successfully');
 			})
 			.catch((error) => {
 				if (error.code === 'auth/email-already-in-use') {
@@ -52,7 +54,8 @@ function Signup() {
 
 	const handleGoogleSignUp = () => {
 		signInWithPopup(auth, provider)
-			.then(() => {
+			.then((userCredential) => {
+				createNewUser(userCredential.user.email);
 				navigate('/dashboard');
 			})
 			.catch((error) => {

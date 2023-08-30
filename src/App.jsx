@@ -7,6 +7,7 @@ import Dashboard from './views/Dashboard';
 import PrivateRoutes from './views/PrivateRoutes';
 import AllPosts from './views/AllPosts';
 import Create from './views/Create';
+import MyProfile from './views/MyProfile';
 
 function App() {
 	return (
@@ -16,6 +17,7 @@ function App() {
 			<Route path="/signup" element={<Signup />} />
 			<Route element={<PrivateRoutes />}>
 				<Route path="/dashboard" element={<Dashboard />}>
+					<Route path="my-profile" element={<MyProfile />} />
 					<Route path="all-posts" element={<AllPosts />} />
 					<Route path="create" element={<Create />} />
 				</Route>

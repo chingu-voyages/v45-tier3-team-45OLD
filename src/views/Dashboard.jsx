@@ -10,7 +10,9 @@ import {
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { auth } from '../../firebase_config';
 import { signOut } from 'firebase/auth';
-import { logoUrl } from '../constants';
+import { logoUrl } from '../constants/index';
+import { removeUser } from '../features/auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
@@ -20,10 +22,10 @@ function Dashboard() {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const [currentTab, setCurrentTab] = useState('');
 
-	const currentUser = auth.currentUser;
-	console.log(currentUser);
+	const currentUser = useSelector((state) => state.user.value);
 
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const navigation = [
 		{
@@ -40,10 +42,11 @@ function Dashboard() {
 		},
 	];
 
-	const onLogout = async (e) => {
+	const onLogout = (e) => {
 		e.preventDefault();
 		signOut(auth)
 			.then(() => {
+				dispatch(removeUser());
 				navigate('/');
 			})
 			.catch((error) => {
@@ -231,11 +234,7 @@ function Dashboard() {
 								<Menu.Button className="-m-1.5 flex items-center p-1.5">
 									<img
 										className="object-cover w-10 h-10 rounded-full bg-gray-50"
-										src={
-											currentUser
-												? currentUser.photoURL
-												: 'https://res.cloudinary.com/yilin1234/image/upload/v1692746214/istockphoto-1337144146-612x612_rtbsc1.jpg'
-										}
+										src={currentUser.picture}
 										alt="User Profile"
 									/>
 									<span className="hidden lg:flex lg:items-center">
@@ -243,8 +242,7 @@ function Dashboard() {
 											className="ml-4 text-sm font-semibold leading-6 text-gray-900"
 											aria-hidden="true"
 										>
-											{currentUser.displayName ||
-												currentUser.email.split('@')[0]}
+											{currentUser.username}
 										</span>
 										<ChevronDownIcon
 											className="w-5 h-5 ml-2 text-gray-400"
@@ -283,7 +281,7 @@ function Dashboard() {
 													onClick={onLogout}
 													className={classNames(
 														active ? 'bg-gray-50' : '',
-														'block px-3 py-1 cursor-pointer text-sm leading-6 text-gray-900'
+														'block px-3 py-1 text-sm leading-6 text-gray-900'
 													)}
 												>
 													sign out
