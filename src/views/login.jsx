@@ -7,6 +7,7 @@ import {
 } from 'firebase/auth';
 import { auth } from '../../firebase_config';
 import { Link, useNavigate } from 'react-router-dom';
+import { createNewUser } from '../service/user';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { logoUrl } from '../constants';
@@ -46,9 +47,10 @@ function Login() {
 			});
 	};
 
-	const handleGoogleSignUp = () => {
+	const handleGoogleLogIn = () => {
 		signInWithPopup(auth, provider)
-			.then(() => {
+			.then((userCredential) => {
+				createNewUser(userCredential.user.email);
 				navigate('/dashboard');
 			})
 			.catch((error) => {
@@ -62,7 +64,7 @@ function Login() {
 			<ToastContainer position="top-right" />
 			<div className="sm:mx-auto sm:w-full sm:max-w-md">
 				<Link to="/">
-					<img className="w-auto mx-auto h-28" src={logo_url} alt="logo" />
+					<img className="w-auto mx-auto h-28" src={logoUrl} alt="logo" />
 				</Link>
 				<h2 className="mt-6 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900">
 					Log in to your account
@@ -145,7 +147,7 @@ function Login() {
 							<button
 								className="flex w-full items-center justify-center gap-3 rounded-md px-3 py-1.5 text-gray-700 font-semibold text-lg border-2 border-gray-100 hover:bg-[#e9e9ea] hover:border-transparent"
 								type="button"
-								onClick={handleGoogleSignUp}
+								onClick={handleGoogleLogIn}
 							>
 								<img
 									src="https://res.cloudinary.com/yilin1234/image/upload/v1692507925/Google__G__Logo.svg_notatb.png"
