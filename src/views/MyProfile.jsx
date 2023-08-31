@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { updateUserByEmail } from '../service/user';
+import { updateUserProfile } from '../service/user';
 import { PhotoIcon, ArrowUpOnSquareIcon } from '@heroicons/react/24/solid';
 import { ArrowPathIcon } from '@heroicons/react/20/solid';
 import { ToastContainer, toast } from 'react-toastify';
@@ -54,8 +54,8 @@ function MyProfile() {
 		}
 
 		try {
-			await updateUserByEmail(
-				currentUser.email,
+			await updateUserProfile(
+				currentUser.id,
 				username,
 				profilePictureUrl,
 				aboutMe
