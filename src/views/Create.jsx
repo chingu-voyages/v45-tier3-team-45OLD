@@ -26,9 +26,9 @@ function Create() {
 			const data = new FormData();
 			if (image) {
 				data.append('file', image);
-				data.append('upload_preset', 'purchaseApp');
+				data.append('upload_preset', 'social_media_app');
 				const response = await axios.post(
-					'https://api.cloudinary.com/v1_1/yilin1234/image/upload',
+					'https://api.cloudinary.com/v1_1/da4jbx5r9/image/upload',
 					data
 				);
 				return response.data.secure_url;
