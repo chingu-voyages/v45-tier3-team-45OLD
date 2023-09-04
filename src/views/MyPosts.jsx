@@ -1,16 +1,18 @@
-import { getAllPosts } from '../service/post';
+import { getPostsByUserName } from '../service/post';
 import { useState, useEffect } from 'react';
 import List from '../components/List';
+import { useSelector } from 'react-redux';
 
-export default function AllPosts() {
+export default function MyPosts() {
 	const [posts, setPosts] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const currentUser = useSelector((state) => state.user.value);
 
 	useEffect(() => {
 		async function initialSetUp() {
 			setIsLoading(true);
 			try {
-				const data = await getAllPosts();
+				const data = await getPostsByUserName(currentUser.username);
 				setPosts(data);
 				console.log(data);
 			} catch (error) {
