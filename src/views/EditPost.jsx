@@ -5,6 +5,7 @@ import { PhotoIcon, ArrowUpOnSquareIcon } from '@heroicons/react/24/solid';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import BeatLoader from 'react-spinners/BeatLoader';
 import 'react-toastify/dist/ReactToastify.css';
 
 function EditPost() {
@@ -12,10 +13,10 @@ function EditPost() {
 	const [content, setContent] = useState('');
 	const [image, setImage] = useState(null);
 	const [imagePreview, setImagePreview] = useState('');
-	const [currentImageURL, setCurrentImageURL] = useState('');
+	// const [currentImageURL, setCurrentImageURL] = useState('');
 	const [isLoading, setIsLoading] = useState(true);
-	const [success, setSuccess] = useState(false);
-	const [error, setError] = useState(null);
+	// const [success, setSuccess] = useState(false);
+	// const [error, setError] = useState(null);
 	const currentUser = useSelector((state) => state.user.value);
 
 	useEffect(() => {
@@ -75,7 +76,7 @@ function EditPost() {
 			url = await handleImageUpload();
 		}
 
-		const now = new Date(); // Get the current time
+		// const now = new Date(); // Get the current time
 
 		// Initialize request body
 		const body = {
@@ -161,7 +162,7 @@ function EditPost() {
 						type="submit"
 						className="px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 					>
-						update
+						{isLoading ? <BeatLoader size={10} color="#36d7b7" /> : 'update'}
 					</button>
 				</div>
 			</form>
