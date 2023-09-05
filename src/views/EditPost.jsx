@@ -16,8 +16,8 @@ function EditPost() {
 	// const [currentImageURL, setCurrentImageURL] = useState('');
 	const [isLoading, setIsLoading] = useState(true);
 	// const [success, setSuccess] = useState(false);
-	// const [error, setError] = useState(null);
-	const currentUser = useSelector((state) => state.user.value);
+	const [error, setError] = useState(null);
+	// const currentUser = useSelector((state) => state.user.value);
 
 	useEffect(() => {
 		async function initialSetUp() {
