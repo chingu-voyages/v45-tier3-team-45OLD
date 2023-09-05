@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { getPostById, updatePostById } from '../service/post';
 import { PhotoIcon, ArrowUpOnSquareIcon } from '@heroicons/react/24/solid';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import BeatLoader from 'react-spinners/BeatLoader';
@@ -16,7 +16,7 @@ function EditPost() {
 	// const [currentImageURL, setCurrentImageURL] = useState('');
 	const [isLoading, setIsLoading] = useState(true);
 	// const [success, setSuccess] = useState(false);
-	const [error, setError] = useState(null);
+	// const [error, setError] = useState(null);
 	// const currentUser = useSelector((state) => state.user.value);
 
 	useEffect(() => {
@@ -32,7 +32,7 @@ function EditPost() {
 				setImagePreview(data.image);
 			} catch (error) {
 				console.error(error);
-				setError(error);
+				// setError(error);
 			} finally {
 				setIsLoading(false);
 			}
