@@ -8,7 +8,8 @@ import PrivateRoutes from './views/PrivateRoutes';
 import AllPosts from './views/AllPosts';
 import Create from './views/Create';
 import MyProfile from './views/MyProfile';
-
+import MyPosts from './views/MyPosts';
+import EditPost from './views/EditPost';
 function App() {
 	return (
 		<Routes>
@@ -19,6 +20,8 @@ function App() {
 				<Route path="/dashboard" element={<Dashboard />}>
 					<Route path="my-profile" element={<MyProfile />} />
 					<Route path="all-posts" element={<AllPosts />} />
+					<Route path="my-posts" element={<MyPosts />} />
+					<Route path="edit/:id" element={<EditPost />} />
 					<Route path="create" element={<Create />} />
 				</Route>
 			</Route>

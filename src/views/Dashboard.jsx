@@ -6,6 +6,7 @@ import {
 	HomeIcon,
 	XMarkIcon,
 	PlusCircleIcon,
+	UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { auth } from '../../firebase_config';
@@ -33,6 +34,12 @@ function Dashboard() {
 			href: 'all-posts',
 			icon: HomeIcon,
 			current: currentTab === 'all posts',
+		},
+		{
+			name: 'my posts',
+			href: 'my-posts',
+			icon: UserCircleIcon,
+			current: currentTab === 'my posts',
 		},
 		{
 			name: 'new post',

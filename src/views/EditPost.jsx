@@ -1,17 +1,44 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { createNewPost } from '../service/post';
+import { getPostById, updatePostById } from '../service/post';
 import { PhotoIcon, ArrowUpOnSquareIcon } from '@heroicons/react/24/solid';
-import { useSelector } from 'react-redux';
-
+// import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import BeatLoader from 'react-spinners/BeatLoader';
 import 'react-toastify/dist/ReactToastify.css';
 
-function Create() {
+function EditPost() {
+	const { id } = useParams();
 	const [content, setContent] = useState('');
 	const [image, setImage] = useState(null);
 	const [imagePreview, setImagePreview] = useState('');
-	const currentUser = useSelector((state) => state.user.value);
+	// const [currentImageURL, setCurrentImageURL] = useState('');
+	const [isLoading, setIsLoading] = useState(true);
+	// const [success, setSuccess] = useState(false);
+	// const [error, setError] = useState(null);
+	// const currentUser = useSelector((state) => state.user.value);
+
+	useEffect(() => {
+		async function initialSetUp() {
+			setIsLoading(true);
+			if (!id) {
+				console.log('No ID provided');
+				return;
+			}
+			try {
+				const data = await getPostById(id);
+				setContent(data.content);
+				setImagePreview(data.image);
+			} catch (error) {
+				console.error(error);
+				// setError(error);
+			} finally {
+				setIsLoading(false);
+			}
+		}
+		initialSetUp();
+	}, [id]);
 
 	function handleImageChange(event) {
 		const { files } = event.target;
@@ -41,30 +68,24 @@ function Create() {
 
 	async function handleOnSubmit(e) {
 		e.preventDefault();
-
-		let url = null; // Default value is set to null
+		// set Default image to user's image or set to null
+		let url = imagePreview ? imagePreview : null;
 
 		// If there's an image to upload, get its URL
 		if (image) {
 			url = await handleImageUpload();
 		}
 
-		const now = new Date(); // Get the current time
+		// const now = new Date(); // Get the current time
 
 		// Initialize request body
 		const body = {
 			content: content,
-			createdAt: now.toISOString(),
 			image: url,
-			commentsCount: 0,
-			likesCount: 0,
-			email: currentUser.email,
-			userProfilePicture: currentUser.picture,
-			username: currentUser.username,
 		};
 
 		try {
-			await createNewPost(body);
+			await updatePostById(id, body);
 			toast.success('Post created successfully!');
 		} catch (error) {
 			console.error(error);
@@ -141,7 +162,7 @@ function Create() {
 						type="submit"
 						className="px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 					>
-						post
+						{isLoading ? <BeatLoader size={10} color="#36d7b7" /> : 'update'}
 					</button>
 				</div>
 			</form>
@@ -149,4 +170,4 @@ function Create() {
 	);
 }
 
-export default Create;
+export default EditPost;
