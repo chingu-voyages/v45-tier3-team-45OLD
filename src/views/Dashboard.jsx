@@ -8,58 +8,24 @@ import {
 	PlusCircleIcon,
 	UserCircleIcon,
 } from '@heroicons/react/24/outline';
+import { onLogout } from '../utils';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { auth } from '../../firebase_config';
 import { signOut } from 'firebase/auth';
-import { logoUrl } from '../constants/index';
 import { removeUser } from '../features/auth/authSlice';
+import { logoUrl, navigation } from '../constants/index';
 import { useDispatch, useSelector } from 'react-redux';
+import { Sidebar } from '../components/sidebar';
 
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ');
-}
-
-function Dashboard() {
+export default function Dashboard() {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const [currentTab, setCurrentTab] = useState('');
-
 	const currentUser = useSelector((state) => state.user.value);
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	const navigation = [
-		{
-			name: 'all posts',
-			href: 'all-posts',
-			icon: HomeIcon,
-			current: currentTab === 'all posts',
-		},
-		{
-			name: 'my posts',
-			href: 'my-posts',
-			icon: UserCircleIcon,
-			current: currentTab === 'my posts',
-		},
-		{
-			name: 'new post',
-			href: 'create',
-			icon: PlusCircleIcon,
-			current: currentTab === 'new post',
-		},
-	];
-
-	const onLogout = (e) => {
-		e.preventDefault();
-		signOut(auth)
-			.then(() => {
-				dispatch(removeUser());
-				navigate('/');
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	};
+	const handleLogout = onLogout(auth, dispatch, navigate);
 
 	return (
 		<div>
@@ -136,20 +102,20 @@ function Dashboard() {
 														>
 															<Link
 																to={item.href}
-																className={classNames(
-																	item.current
+																className={
+																	(item.current
 																		? 'bg-gray-50 text-indigo-600'
 																		: 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
-																	'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
-																)}
+																	'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold')
+																}
 															>
 																<item.icon
-																	className={classNames(
-																		item.current
+																	className={
+																		(item.current
 																			? 'text-indigo-600'
 																			: 'text-gray-400 group-hover:text-indigo-600',
-																		'h-6 w-6 shrink-0'
-																	)}
+																		'h-6 w-6 shrink-0')
+																	}
 																	aria-hidden="true"
 																/>
 																{item.name}
@@ -170,48 +136,11 @@ function Dashboard() {
 			{/* Static sidebar for desktop */}
 			<div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
 				{/* Sidebar component, swap this element with another sidebar if you like */}
-				<div className="flex flex-col px-6 pb-4 overflow-y-auto bg-white border-r border-gray-200 grow gap-y-5">
-					<div className="flex items-center h-16 shrink-0">
-						<Link to="/">
-							<img className="w-auto h-16" src={logoUrl} alt="logo" />
-						</Link>
-					</div>
-					<nav className="flex flex-col flex-1">
-						<ul className="flex flex-col flex-1 gap-y-7">
-							<li>
-								<ul className="-mx-2 space-y-1">
-									{navigation.map((item) => (
-										<li
-											key={item.name}
-											onClick={() => setCurrentTab(item.name)}
-										>
-											<Link
-												to={item.href}
-												className={classNames(
-													item.current
-														? 'bg-gray-50 text-indigo-600'
-														: 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
-													'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
-												)}
-											>
-												<item.icon
-													className={classNames(
-														item.current
-															? 'text-indigo-600'
-															: 'text-gray-400 group-hover:text-indigo-600',
-														'h-6 w-6 shrink-0'
-													)}
-													aria-hidden="true"
-												/>
-												{item.name}
-											</Link>
-										</li>
-									))}
-								</ul>
-							</li>
-						</ul>
-					</nav>
-				</div>
+				<Sidebar
+					navigation={navigation}
+					currentTab={currentTab}
+					setCurrentTab={setCurrentTab}
+				/>
 			</div>
 
 			<div className="lg:pl-72">
@@ -272,10 +201,10 @@ function Dashboard() {
 											{({ active }) => (
 												<Link
 													to="my-profile" // Replace with your desired link
-													className={classNames(
-														active ? 'bg-gray-50' : '',
-														'block px-3 py-1 text-sm leading-6 text-gray-900'
-													)}
+													className={
+														(active ? 'bg-gray-50' : '',
+														'block px-3 py-1 text-sm leading-6 text-gray-900')
+													}
 												>
 													your profile
 												</Link>
@@ -284,15 +213,15 @@ function Dashboard() {
 										{/* Sign Out Item */}
 										<Menu.Item>
 											{({ active }) => (
-												<div
-													onClick={onLogout}
-													className={classNames(
-														active ? 'bg-gray-50' : '',
-														'block px-3 py-1 text-sm leading-6 text-gray-900'
-													)}
+												<button
+													onClick={(event) => handleLogout(event)}
+													className={
+														(active ? 'bg-gray-50' : '',
+														'block px-3 py-1 text-sm leading-6 text-gray-900')
+													}
 												>
 													sign out
-												</div>
+												</button>
 											)}
 										</Menu.Item>
 									</Menu.Items>
@@ -311,5 +240,3 @@ function Dashboard() {
 		</div>
 	);
 }
-
-export default Dashboard;
