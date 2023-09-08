@@ -25,6 +25,14 @@
 	"settings": {
 		"react": {
 			"version": "detect"
+		},
+		"tailwindcss": {
+			// These are the default values but feel free to customize
+			"callees": ["classnames", "clsx", "ctl"],
+			"config": "tailwind.config.js",
+			"prependCustom": false,
+			"removeDuplicates": true,
+			"whitelist": []
 		}
 	},
 	"plugins": ["react"],
@@ -36,6 +44,7 @@
 		"import/no-named-as-default-member": "off",
 		"import/no-named-as-default": "off",
 		"react/react-in-jsx-scope": "off",
+		"tailwindcss/classnames-order": "warn",
 		"prettier/prettier": [
 			"error",
 			{},

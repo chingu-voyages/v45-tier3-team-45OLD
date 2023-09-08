@@ -6,6 +6,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../../firebase_config';
 import { removeUser } from '../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
+
 function Landing() {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const dispatch = useDispatch();
