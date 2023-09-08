@@ -15,7 +15,7 @@ import { signOut } from 'firebase/auth';
 import { removeUser } from '../features/auth/authSlice';
 import { logoUrl, navigation } from '../constants/index';
 import { useDispatch, useSelector } from 'react-redux';
-import { Sidebar } from '../components/sidebar';
+import { Sidebar } from '../components/Sidebar';
 
 export default function Dashboard() {
 	const [sidebarOpen, setSidebarOpen] = useState(false);

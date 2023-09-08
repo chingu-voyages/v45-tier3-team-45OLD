@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { logoUrl } from '../constants/index';
-import UserList from '../components/userList';
+import UserList from './UserList';
 
 export function Sidebar({ navigation, currentTab, setCurrentTab }) {
 	return (
