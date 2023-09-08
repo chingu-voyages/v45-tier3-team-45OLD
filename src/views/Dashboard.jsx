@@ -11,8 +11,6 @@ import {
 import { onLogout } from '../utils';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { auth } from '../../firebase_config';
-import { signOut } from 'firebase/auth';
-import { removeUser } from '../features/auth/authSlice';
 import { logoUrl, navigation } from '../constants/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { Sidebar } from '../components/Sidebar';

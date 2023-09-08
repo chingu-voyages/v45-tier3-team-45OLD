@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { getAllUsers } from '../service/user'; // Adjust the path as needed
 
 const UserCard = ({ username, picture }) => {
