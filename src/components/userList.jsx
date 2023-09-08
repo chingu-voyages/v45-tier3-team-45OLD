@@ -9,7 +9,7 @@ const UserCard = ({ username, picture }) => {
 				alt={`${username} photo`}
 				className="w-8 h-8 mr-4 rounded-full"
 			/>
-			<h3 className="font-semibold text-center text-md text-ellipsis">
+			<h3 className="text-base font-semibold text-center text-ellipsis">
 				{username}
 			</h3>
 		</div>
