@@ -1,13 +1,7 @@
 import { Fragment, useState } from 'react';
 import { Link, useNavigate, Outlet } from 'react-router-dom';
 import { Dialog, Menu, Transition } from '@headlessui/react';
-import {
-	Bars3Icon,
-	HomeIcon,
-	XMarkIcon,
-	PlusCircleIcon,
-	UserCircleIcon,
-} from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { onLogout } from '../utils';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { auth } from '../../firebase_config';
