@@ -1,6 +1,5 @@
 import Button from '../components/Button';
 import { useState, useEffect } from 'react';
-// import PacmanLoader from "react-spinners/PacmanLoader";
 import { name, slogan, logoUrl } from '../constants/index';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../../firebase_config';
