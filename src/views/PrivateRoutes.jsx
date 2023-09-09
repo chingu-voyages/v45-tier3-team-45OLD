@@ -5,6 +5,7 @@ import { auth } from '../../firebase_config';
 import { getUserByEmail } from '../service/user';
 import { setUser } from '../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
+import Loader from '../components/Loader';
 
 function PrivateRoutes() {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -29,7 +30,7 @@ function PrivateRoutes() {
 	}, [dispatch]);
 
 	if (isLoading) {
-		return <div>loading...</div>;
+		return <Loader />;
 	}
 
 	return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
