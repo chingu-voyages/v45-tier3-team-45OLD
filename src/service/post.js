@@ -9,6 +9,7 @@ import {
 	doc,
 	query,
 	where,
+	orderBy,
 } from 'firebase/firestore';
 
 //🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢( POST )🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢 🟢
@@ -26,9 +27,9 @@ export const createNewPost = async (body) => {
 
 export const getAllPosts = async () => {
 	const postsCollection = collection(db, 'posts');
-
+	const sortedQuery = query(postsCollection, orderBy('createdAt', 'desc'));
 	try {
-		const querySnapshot = await getDocs(postsCollection);
+		const querySnapshot = await getDocs(sortedQuery);
 		const posts = [];
 
 		querySnapshot.forEach((doc) => {
@@ -48,10 +49,14 @@ export const getAllPosts = async () => {
 
 export const getPostsByUserName = async (username) => {
 	const postsCollection = collection(db, 'posts');
-	const q = query(postsCollection, where('username', '==', username)); // Query where 'userId' field matches provided userId
+	const sortedQuery = query(
+		postsCollection,
+		where('username', '==', username),
+		orderBy('createdAt', 'desc')
+	); // Query where 'userId' field matches provided userId
 
 	try {
-		const querySnapshot = await getDocs(q);
+		const querySnapshot = await getDocs(sortedQuery);
 		const posts = [];
 
 		querySnapshot.forEach((doc) => {

@@ -1,11 +1,12 @@
 import Button from '../components/Button';
 import { useState, useEffect } from 'react';
 // import PacmanLoader from "react-spinners/PacmanLoader";
-import { name, logoUrl } from '../constants/index';
+import { name, slogan, logoUrl } from '../constants/index';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../../firebase_config';
 import { removeUser } from '../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
+
 function Landing() {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const dispatch = useDispatch();
@@ -48,9 +49,7 @@ function Landing() {
 						<h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
 							{name}
 						</h1>
-						<p className="mt-6 text-lg leading-8 text-gray-600">
-							Connect with friends and the world around you on Facebook.
-						</p>
+						<p className="mt-6 text-lg leading-8 text-gray-600">{slogan}</p>
 						{!isAuthenticated ? (
 							<div className="flex items-center justify-center mt-10 gap-x-6">
 								<Button title={'Log in'} path={'/login'} />
