@@ -54,6 +54,28 @@ export const getUserByEmail = async (email) => {
 	}
 };
 
+export const getAllUsers = async () => {
+	const usersCollection = collection(db, 'users');
+
+	try {
+		const querySnapshot = await getDocs(usersCollection);
+		const users = [];
+
+		querySnapshot.forEach((doc) => {
+			const user = doc.data();
+			users.push({
+				id: doc.id, // Include the document ID as "id"
+				...user, // Include the rest of the post data
+			});
+		});
+		console.log('users: ', users);
+		return users;
+	} catch (error) {
+		console.error('Error fetching users:', error);
+		throw new Error('Error fetching users');
+	}
+};
+
 //🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡( PUT )🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡
 
 export async function updateUserProfile(

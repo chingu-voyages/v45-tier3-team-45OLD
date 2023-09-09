@@ -2,6 +2,7 @@ import { getPostsByUserName } from '../service/post';
 import { useState, useEffect } from 'react';
 import List from '../components/List';
 import { useSelector } from 'react-redux';
+import Loader from '../components/Loader';
 
 export default function MyPosts() {
 	const [posts, setPosts] = useState([]);
@@ -24,7 +25,7 @@ export default function MyPosts() {
 		initialSetUp();
 	}, []);
 
-	if (isLoading) return <div>Loading...</div>;
+	if (isLoading) return <Loader />;
 
 	return <List posts={posts} />;
 }
