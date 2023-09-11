@@ -22,10 +22,7 @@ function EditPost() {
 	useEffect(() => {
 		async function initialSetUp() {
 			setIsLoading(true);
-			if (!id) {
-				console.log('No ID provided');
-				return;
-			}
+
 			try {
 				const data = await getPostById(id);
 				setContent(data.content);

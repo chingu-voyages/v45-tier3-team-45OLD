@@ -45,7 +45,7 @@ function Signup() {
 				if (error.code === 'auth/weak-password') {
 					toast.error('Password must be at least 6 characters');
 				}
-				console.log(error);
+				console.error(error);
 			})
 			.finally(() => {
 				setIsLoading(false);
@@ -59,7 +59,7 @@ function Signup() {
 				navigate('/dashboard/all-posts');
 			})
 			.catch((error) => {
-				console.log(error);
+				console.error(error);
 			});
 	};
 

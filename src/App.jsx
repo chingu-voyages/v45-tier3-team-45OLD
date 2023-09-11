@@ -9,11 +9,14 @@ const PrivateRoutes = lazy(() => import('./views/PrivateRoutes'));
 const AllPosts = lazy(() => import('./views/AllPosts'));
 const Create = lazy(() => import('./views/Create'));
 const MyProfile = lazy(() => import('./views/MyProfile'));
+const UserProfile = lazy(() => import('./views/UserProfile'));
 const MyPosts = lazy(() => import('./views/MyPosts'));
 const EditPost = lazy(() => import('./views/EditPost'));
 const Users = lazy(() => import('./views/AllUsers'));
 const Detail = lazy(() => import('./views/Details'));
-
+const MessagePanel = lazy(() => import('./views/MessagePanel'));
+const DirectMessage = lazy(() => import('./views/DirectMessage'));
+const LikedPosts = lazy(() => import('./views/LikedPosts'));
 function App() {
 	return (
 		<Suspense fallback={<Loader />}>
@@ -30,6 +33,10 @@ function App() {
 						<Route path="create" element={<Create />} />
 						<Route path="users" element={<Users />} />
 						<Route path="detail/:id" element={<Detail />} />
+						<Route path="user-profile/:email" element={<UserProfile />} />
+						<Route path="direct-message" element={<DirectMessage />} />
+						<Route path="message-panel" element={<MessagePanel />} />
+						<Route path="liked-posts" element={<LikedPosts />} />
 					</Route>
 				</Route>
 			</Routes>
