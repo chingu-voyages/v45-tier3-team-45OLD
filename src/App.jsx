@@ -11,6 +11,8 @@ const Create = lazy(() => import('./views/Create'));
 const MyProfile = lazy(() => import('./views/MyProfile'));
 const MyPosts = lazy(() => import('./views/MyPosts'));
 const EditPost = lazy(() => import('./views/EditPost'));
+const Users = lazy(() => import('./views/AllUsers'));
+const Detail = lazy(() => import('./views/Details'));
 
 function App() {
 	return (
@@ -26,6 +28,8 @@ function App() {
 						<Route path="my-posts" element={<MyPosts />} />
 						<Route path="edit/:id" element={<EditPost />} />
 						<Route path="create" element={<Create />} />
+						<Route path="users" element={<Users />} />
+						<Route path="detail/:id" element={<Detail />} />
 					</Route>
 				</Route>
 			</Routes>

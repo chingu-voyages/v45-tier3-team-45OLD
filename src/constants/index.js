@@ -1,7 +1,8 @@
 import {
 	HomeIcon,
 	PlusCircleIcon,
-	UserCircleIcon,
+	FolderIcon,
+	UserGroupIcon,
 } from '@heroicons/react/24/outline';
 
 export const name = 'facebook clone';
@@ -20,7 +21,7 @@ export const navigation = [
 	{
 		name: 'my posts',
 		href: 'my-posts',
-		icon: UserCircleIcon,
+		icon: FolderIcon,
 		current: 'my posts',
 	},
 	{
@@ -28,5 +29,11 @@ export const navigation = [
 		href: 'create',
 		icon: PlusCircleIcon,
 		current: 'new post',
+	},
+	{
+		name: 'users',
+		href: 'users',
+		icon: UserGroupIcon,
+		current: 'users',
 	},
 ];

@@ -26,7 +26,7 @@ function Login() {
 
 		signInWithEmailAndPassword(auth, email, password)
 			.then(() => {
-				navigate('/dashboard');
+				navigate('/dashboard/all-posts');
 			})
 			.catch((error) => {
 				switch (error.code) {
@@ -51,7 +51,7 @@ function Login() {
 		signInWithPopup(auth, provider)
 			.then((userCredential) => {
 				createNewUser(userCredential.user.email);
-				navigate('/dashboard');
+				navigate('/dashboard/all-posts9');
 			})
 			.catch((error) => {
 				toast.error('An error occurred during Google sign up.');

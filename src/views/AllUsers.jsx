@@ -16,7 +16,7 @@ const UserCard = ({ username, picture }) => {
 	);
 };
 
-function UserList() {
+function AllUsers() {
 	const [users, setUsers] = useState([]);
 
 	useEffect(() => {
@@ -44,4 +44,4 @@ function UserList() {
 	);
 }
 
-export default UserList;
+export default AllUsers;

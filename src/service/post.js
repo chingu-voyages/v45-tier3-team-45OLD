@@ -49,11 +49,7 @@ export const getAllPosts = async () => {
 
 export const getPostsByUserName = async (username) => {
 	const postsCollection = collection(db, 'posts');
-	const sortedQuery = query(
-		postsCollection,
-		where('username', '==', username),
-		orderBy('createdAt', 'desc')
-	); // Query where 'userId' field matches provided userId
+	const sortedQuery = query(postsCollection, where('username', '==', username)); // Query where 'userId' field matches provided userId
 
 	try {
 		const querySnapshot = await getDocs(sortedQuery);
