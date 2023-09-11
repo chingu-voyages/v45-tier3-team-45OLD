@@ -43,7 +43,7 @@ function Login() {
 						toast.error('An error occurred during login.');
 				}
 				setIsLoading(false);
-				console.log(error);
+				console.error(error);
 			});
 	};
 
@@ -51,11 +51,11 @@ function Login() {
 		signInWithPopup(auth, provider)
 			.then((userCredential) => {
 				createNewUser(userCredential.user.email);
-				navigate('/dashboard/all-posts9');
+				navigate('/dashboard/all-posts');
 			})
 			.catch((error) => {
 				toast.error('An error occurred during Google sign up.');
-				console.log(error);
+				console.error(error);
 			});
 	};
 

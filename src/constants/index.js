@@ -3,6 +3,8 @@ import {
 	PlusCircleIcon,
 	FolderIcon,
 	UserGroupIcon,
+	ChatBubbleLeftIcon,
+	HeartIcon,
 } from '@heroicons/react/24/outline';
 
 export const name = 'facebook clone';
@@ -35,5 +37,17 @@ export const navigation = [
 		href: 'users',
 		icon: UserGroupIcon,
 		current: 'users',
+	},
+	{
+		name: 'messages',
+		href: 'message-panel',
+		icon: ChatBubbleLeftIcon,
+		current: 'messages',
+	},
+	{
+		name: 'liked posts',
+		href: 'liked-posts',
+		icon: HeartIcon,
+		current: 'liked posts',
 	},
 ];

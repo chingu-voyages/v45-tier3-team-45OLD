@@ -53,7 +53,6 @@ export const getUserByEmail = async (email) => {
 		throw new Error('No user found with the provided email');
 	}
 };
-
 export const getAllUsers = async () => {
 	const usersCollection = collection(db, 'users');
 
@@ -68,7 +67,7 @@ export const getAllUsers = async () => {
 				...user, // Include the rest of the post data
 			});
 		});
-		console.log('users: ', users);
+
 		return users;
 	} catch (error) {
 		console.error('Error fetching users:', error);

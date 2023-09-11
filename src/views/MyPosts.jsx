@@ -1,4 +1,4 @@
-import { getPostsByUserName } from '../service/post';
+import { getPostsByEmail } from '../service/post';
 import { useState, useEffect } from 'react';
 import List from '../components/List';
 import { useSelector } from 'react-redux';
@@ -13,9 +13,8 @@ export default function MyPosts() {
 		async function initialSetUp() {
 			setIsLoading(true);
 			try {
-				const data = await getPostsByUserName(currentUser.username);
+				const data = await getPostsByEmail(currentUser.email);
 				setPosts(data);
-				console.log(data);
 			} catch (error) {
 				console.error(error);
 			} finally {

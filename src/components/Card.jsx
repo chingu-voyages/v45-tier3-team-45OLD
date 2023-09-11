@@ -40,11 +40,13 @@ const Card = ({ post }) => {
 			<ToastContainer position="bottom-right" />
 			<div className="flex items-center justify-between">
 				<div className="flex items-center">
-					<img
-						src={post.userProfilePicture}
-						alt={`${post.username}'s profile`}
-						className="w-10 h-10 mr-4 rounded-full"
-					/>
+					<Link to={`/dashboard/user-profile/${post.email}`}>
+						<img
+							src={post.userProfilePicture}
+							alt={`${post.username}'s profile`}
+							className="w-10 h-10 mr-4 rounded-full"
+						/>
+					</Link>
 					<div className="text-sm">
 						<p className="font-bold">{post.username}</p>
 						<p className="text-gray-500">

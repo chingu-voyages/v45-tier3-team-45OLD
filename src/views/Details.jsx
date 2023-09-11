@@ -5,7 +5,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { HeartIcon } from '@heroicons/react/20/solid';
 
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import { useSelector } from 'react-redux';
 import ActionMenu from '../components/ActionMenu';
@@ -31,7 +31,7 @@ function Detail() {
 			try {
 				const LikeStatus = await checkLikeStatus(id, currentUser.id);
 				const data = await getPostById(id);
-				console.log('detail data:', data);
+
 				setIsLiked(LikeStatus);
 				setPost(data);
 			} catch (error) {
@@ -86,11 +86,13 @@ function Detail() {
 				<div className="max-w-lg p-4 mx-auto mt-4 bg-white border rounded-lg shadow-md">
 					<div className="flex items-center justify-between">
 						<div className="flex items-center">
-							<img
-								src={post.userProfilePicture}
-								alt={`${post.username}'s profile`}
-								className="w-10 h-10 mr-4 rounded-full"
-							/>
+							<Link to={`/dashboard/user-profile/${post.email}`}>
+								<img
+									src={post.userProfilePicture}
+									alt={`${post.username}'s profile`}
+									className="w-10 h-10 mr-4 rounded-full"
+								/>
+							</Link>
 							<div className="text-sm">
 								<p className="font-bold">{post.username}</p>
 								<p className="text-gray-500">

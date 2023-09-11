@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
 import { getAllUsers } from '../service/user'; // Adjust the path as needed
+import { Link } from 'react-router-dom';
 
-const UserCard = ({ username, picture }) => {
+const UserCard = ({ username, picture, email }) => {
 	return (
 		<div className="flex items-center justify-center p-4 bg-white rounded-lg shadow-md">
-			<img
-				src={picture}
-				alt={`${username} photo`}
-				className="w-8 h-8 mr-4 rounded-full"
-			/>
+			<Link to={`/dashboard/user-profile/${email}`}>
+				<img
+					src={picture}
+					alt={`${username} photo`}
+					className="w-8 h-8 mr-4 rounded-full"
+				/>
+			</Link>
 			<h3 className="text-base font-semibold text-center text-ellipsis">
 				{username}
 			</h3>

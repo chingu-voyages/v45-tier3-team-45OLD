@@ -17,9 +17,8 @@ function Comment({ postId }) {
 		async function initialSetUp() {
 			setIsLoading(true);
 			try {
-				console.log(postId);
 				const data = await getCommentsByPostId(postId);
-				console.log(data);
+
 				setComments(data);
 			} catch (error) {
 				console.error(error);
@@ -41,6 +40,7 @@ function Comment({ postId }) {
 				input,
 				now.toISOString(),
 				currentUser.username,
+				currentUser.email,
 				currentUser.picture
 			);
 			toast.success('create new comment successfully!');
