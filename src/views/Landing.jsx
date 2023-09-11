@@ -56,7 +56,7 @@ function Landing() {
 							</div>
 						) : (
 							<div className="flex items-center justify-center mt-10 gap-x-6">
-								<Button title={'dashboard'} path={'/dashboard'} />
+								<Button title={'dashboard'} path={'/dashboard/all-posts'} />
 								<Button title={'logout'} onClick={onLogout} />
 							</div>
 						)}

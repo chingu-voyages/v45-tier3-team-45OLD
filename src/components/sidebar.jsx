@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { logoUrl } from '../constants/index';
-import UserList from './UserList';
 
 export function Sidebar({ navigation, currentTab, setCurrentTab }) {
 	return (
@@ -37,9 +36,6 @@ export function Sidebar({ navigation, currentTab, setCurrentTab }) {
 								</li>
 							))}
 						</ul>
-					</li>
-					<li>
-						<UserList />
 					</li>
 				</ul>
 			</nav>

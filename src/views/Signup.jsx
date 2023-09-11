@@ -56,7 +56,7 @@ function Signup() {
 		signInWithPopup(auth, provider)
 			.then((userCredential) => {
 				createNewUser(userCredential.user.email);
-				navigate('/dashboard');
+				navigate('/dashboard/all-posts');
 			})
 			.catch((error) => {
 				console.log(error);
