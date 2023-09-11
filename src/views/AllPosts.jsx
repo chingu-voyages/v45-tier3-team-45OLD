@@ -13,7 +13,6 @@ export default function AllPosts() {
 			try {
 				const data = await getAllPosts();
 				setPosts(data);
-				console.log(data);
 			} catch (error) {
 				console.error(error);
 			} finally {
