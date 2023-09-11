@@ -16,8 +16,7 @@ import {
 
 export const createNewPost = async (body) => {
 	try {
-		const docRef = await addDoc(collection(db, 'posts'), body);
-		console.log('Document written with ID: ', docRef.id);
+		await addDoc(collection(db, 'posts'), body);
 	} catch (e) {
 		console.error('Error adding document: ', e);
 	}
@@ -47,9 +46,9 @@ export const getAllPosts = async () => {
 	}
 };
 
-export const getPostsByUserName = async (username) => {
+export const getPostsByEmail = async (email) => {
 	const postsCollection = collection(db, 'posts');
-	const sortedQuery = query(postsCollection, where('username', '==', username)); // Query where 'userId' field matches provided userId
+	const sortedQuery = query(postsCollection, where('email', '==', email)); // Query where 'userId' field matches provided userId
 
 	try {
 		const querySnapshot = await getDocs(sortedQuery);
@@ -65,8 +64,8 @@ export const getPostsByUserName = async (username) => {
 
 		return posts;
 	} catch (error) {
-		console.error('Error fetching posts by user ID:', error);
-		throw new Error('Error fetching posts by user ID');
+		console.error('Error fetching posts by user Email:', error);
+		throw new Error('Error fetching posts by user Email');
 	}
 };
 
@@ -90,13 +89,38 @@ export const getPostById = async (postId) => {
 		throw new Error('Error fetching post by ID');
 	}
 };
+
+export const getLikedPostsByUser = async (userId) => {
+	// Step 1: Query the likes collection to get all likes by the specified userId
+	const likesCollection = collection(db, 'likes');
+	const userLikesQuery = query(likesCollection, where('userId', '==', userId));
+	const userLikes = await getDocs(userLikesQuery);
+
+	// Step 2: Extract the list of postId from the likes
+	const postIds = userLikes.docs.map((likeDoc) => likeDoc.data().postId);
+
+	let likedPosts = [];
+
+	// Step 3: For each postId, fetch the corresponding post from the posts collection
+	for (let postId of postIds) {
+		const postData = await getDoc(doc(db, 'posts', postId));
+
+		if (postData.exists()) {
+			likedPosts.push({
+				id: postData.id,
+				...postData.data(),
+			});
+		}
+	}
+
+	return likedPosts;
+};
 //🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡( PUT )🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡
 export const updatePostById = async (postId, body) => {
 	const postRef = doc(db, 'posts', postId); // Get a reference to the post document by its ID
 
 	try {
 		await updateDoc(postRef, body);
-		console.log(`Document with ID ${postId} updated successfully.`);
 	} catch (error) {
 		console.error('Error updating content and image by ID:', error);
 		throw new Error('Error updating content and image by ID');
@@ -109,7 +133,6 @@ export const deletePostById = async (postId) => {
 
 	try {
 		await deleteDoc(postRef);
-		console.log('Document deleted with ID:', postId);
 	} catch (error) {
 		console.error('Error deleting document:', error);
 		throw new Error('Error deleting post');

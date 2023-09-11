@@ -204,7 +204,7 @@ function ListItem({ comment }) {
 			</Transition.Root>
 			<div className="flex space-x-4 text-sm text-gray-500">
 				<div className="flex-none py-10">
-					<Link to={`/dashboard/user-profile/${comment.userId}`}>
+					<Link to={`/dashboard/user-profile/${comment.email}`}>
 						<img
 							src={comment.picture}
 							alt="user profile"

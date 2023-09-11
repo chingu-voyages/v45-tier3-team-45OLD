@@ -19,6 +19,7 @@ export const createNewComment = async (
 	content,
 	createdAt,
 	username,
+	email,
 	picture
 ) => {
 	const commentBody = {
@@ -27,6 +28,7 @@ export const createNewComment = async (
 		content: content,
 		createdAt: createdAt,
 		username: username,
+		email: email,
 		picture: picture,
 	};
 
@@ -81,13 +83,11 @@ export const deleteCommentById = async (commentId) => {
 
 		// Delete the comment
 		await deleteDoc(commentRef);
-		console.log('Comment deleted with ID:', commentId);
 
 		// Decrement the commentsCount for the associated post
 		await updateDoc(postRef, {
 			commentsCount: increment(-1),
 		});
-		console.log('commentsCount decremented for post ID:', postId);
 	} catch (error) {
 		console.error('Error deleting comment:', error);
 		throw new Error('Error deleting comment');
@@ -103,7 +103,6 @@ export const updateCommentById = async (commentId, updatedContent) => {
 		await updateDoc(commentRef, {
 			content: updatedContent,
 		});
-		console.log('Comment updated with ID:', commentId);
 	} catch (error) {
 		console.error('Error updating comment:', error);
 		throw new Error('Error updating comment');

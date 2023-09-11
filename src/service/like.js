@@ -29,7 +29,6 @@ export const likePost = async (postId, userId) => {
 		await updateDoc(postRef, {
 			likesCount: increment(1),
 		});
-		console.log('likeCount incremented for post ID:', postId);
 	} catch (error) {
 		console.error('Error liking the post:', error);
 		throw new Error('Error liking the post');
@@ -57,13 +56,11 @@ export const unlikePost = async (postId, userId) => {
 			for (const likeDoc of likeSnapshot.docs) {
 				await deleteDoc(doc(db, 'likes', likeDoc.id));
 			}
-			console.log('Post unliked for user:', userId);
 
 			// Decrement the likeCount for the post
 			await updateDoc(postRef, {
 				likesCount: increment(-1),
 			});
-			console.log('likeCount decremented for post ID:', postId);
 		} else {
 			console.warn('No like found for user and post combination');
 		}
