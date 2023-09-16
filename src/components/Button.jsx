@@ -7,7 +7,7 @@ function Button({ title, path, onClick }) {
 			<Link
 				to={path}
 				onClick={onClick}
-				className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+				className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]  hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 			>
 				{title}
 			</Link>
@@ -17,7 +17,7 @@ function Button({ title, path, onClick }) {
 	return (
 		<button
 			onClick={onClick}
-			className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+			className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 		>
 			{title}
 		</button>

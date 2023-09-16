@@ -47,7 +47,7 @@ const Card = ({ post }) => {
 							className="w-10 h-10 mr-4 rounded-full"
 						/>
 					</Link>
-					<div className="text-sm">
+					<div className="text-sm font-secondary">
 						<p className="font-bold">{post.username}</p>
 						<p className="text-gray-500">
 							{format(new Date(post.createdAt), 'MMMM d, yyyy')}
@@ -59,7 +59,7 @@ const Card = ({ post }) => {
 					<ActionMenu actionsOptions={actionsOptions} postId={post.id} />
 				)}
 			</div>
-			<div className="mt-4">
+			<div className="mt-4 font-secondary">
 				<p>{post.content}</p>
 			</div>
 			{post.image && (

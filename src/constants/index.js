@@ -7,9 +7,8 @@ import {
 	HeartIcon,
 } from '@heroicons/react/24/outline';
 
-export const name = 'facebook clone';
-export const slogan =
-	'Connect with friends and the world around you on Facebook.';
+export const name = 'Friendscape';
+export const slogan = 'Connect, Share, and Soar with Friendscape';
 export const logoUrl =
 	'https://res.cloudinary.com/yilin1234/image/upload/v1692498189/f__2_-removebg-preview_xxhyv5.png';
 

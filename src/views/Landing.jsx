@@ -36,7 +36,7 @@ function Landing() {
 					aria-label="Global"
 				>
 					<div className="flex lg:flex-1">
-						<img className="w-auto h-28" src={logoUrl} alt="logo" />
+						<img className="w-auto h-28 " src={logoUrl} alt="logo" />
 					</div>
 				</nav>
 			</header>
@@ -45,10 +45,12 @@ function Landing() {
 				<div className="max-w-2xl py-32 mx-auto sm:py-48 lg:py-56">
 					<div className="hidden sm:mb-8 sm:flex sm:justify-center"></div>
 					<div className="text-center">
-						<h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+						<h1 className="text-4xl font-bold tracking-tight text-indigo-600 animate-fade-right animate-delay-100 animate-ease-in-out font-primary sm:text-6xl">
 							{name}
 						</h1>
-						<p className="mt-6 text-lg leading-8 text-gray-600">{slogan}</p>
+						<p className="mt-6 text-lg leading-8 text-gray-600 animate-fade-left animate-delay-100 animate-ease-in-out font-secondary">
+							{slogan}
+						</p>
 						{!isAuthenticated ? (
 							<div className="flex items-center justify-center mt-10 gap-x-6">
 								<Button title={'Log in'} path={'/login'} />

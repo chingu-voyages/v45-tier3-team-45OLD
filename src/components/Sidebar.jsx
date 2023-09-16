@@ -17,7 +17,7 @@ export function Sidebar({ navigation, currentTab, setCurrentTab }) {
 								<li key={item.name} onClick={() => setCurrentTab(item.name)}>
 									<Link
 										to={item.href}
-										className={`group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold ${
+										className={`group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold font-secondary ${
 											currentTab === item.current
 												? 'bg-gray-50 text-indigo-600'
 												: 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50'
